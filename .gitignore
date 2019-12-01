@@ -1,0 +1,9 @@
+/AdventOfCode2019.iml
+.idea
+src/test/resources
+out
+build
+.gradle
+gradle
+gradlew
+gradlew.bat
