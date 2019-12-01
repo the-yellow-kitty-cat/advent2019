@@ -1,32 +1,35 @@
-import java.lang.Integer.max
-
 class Day1RocketEquation {
     fun fuelRequirementsForMass(masses: List<Int>): Int {
         return masses.stream()
-            .mapToInt(Int::toInt)
-            .map { it / 3 }
-            .map { it - 2 }
-            .sum();
+                .mapToInt { fuelRequirement(it) }
+                .sum()
     }
 
-    fun totalFuelRequirements(masses: List<Int>): Int {
+    fun sumOfTotalFuelRequirements(masses: List<Int>): Int {
         return masses.stream()
-            .mapToInt(Int::toInt)
-            .map(this::totalFuelRequirement)
-            .sum()
+                .mapToInt { fuelRequirement(it) }
+                .map(this::totalFuelRequirement)
+                .sum()
     }
 
-    fun totalFuelRequirement(mass: Int): Int {
-        var extraFuel = fuelRequirementForMass(mass)
-        var totalFuelRequirement = extraFuel
+    fun totalFuelRequirement(initialFuelRequirements: Int): Int {
+        var extraFuel = fuelRequirement(initialFuelRequirements)
+        var totalFuel = initialFuelRequirements
+        totalFuel += extraFuel
+        println(initialFuelRequirements)
         while (extraFuel > 0) {
-            extraFuel = max(0, fuelRequirementsForMass(listOf(extraFuel)))
-            totalFuelRequirement += extraFuel
+            extraFuel = fuelRequirement(extraFuel)
+            totalFuel += extraFuel
+            println(extraFuel)
         }
-        return totalFuelRequirement
+        return totalFuel
     }
 
-    fun fuelRequirementForMass(mass: Int): Int {
-        return mass/3 -2;
+    fun fuelRequirement(mass: Int): Int {
+        var fuelCalculation = (mass / 3) - 2
+        if (fuelCalculation < 0) {
+            fuelCalculation = 0
+        }
+        return fuelCalculation
     }
 }
